@@ -18,8 +18,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         python-version: [3.7, 3.8] # feature-tools only update to 0.23.3 on python3.6 and the latest is 1.2.0(2021/11)
-        tf_switch: [with_tf, without_tf]
-        prophet_switch: [with_prophet, without_prophet]
+        tf_switch: [tf_Y, tf_N]
+        prophet_switch: [prophet_Y, prophet_N]
 
         include:
           - os: ubuntu-latest
@@ -43,8 +43,8 @@ jobs:
           - os: windows-latest
             python-version: 3.6
 
-#          - tf_switch: without_tf
-#            prophet_switch: without_prophet
+          - tf_switch: tf_N
+            prophet_switch: prophet_N
 
     steps:
     - uses: actions/checkout@v2
@@ -62,7 +62,7 @@ jobs:
       run: conda list
 
     - name: Install prophet dependencies
-      if:  ${{ matrix.prophet_switch == 'with_prophet' }}
+      if:  ${{ matrix.prophet_switch == 'prophet_Y' }}
       shell: bash -l {0}
       run: |
         python -m pip install --upgrade pip
@@ -83,7 +83,7 @@ jobs:
         pip install -q pytest-cov==2.4.0  python-coveralls  codacy-coverage
 
     - name: Install tensorflow dependencies
-      if:  ${{ matrix.tf_switch == 'with_prophet' }}
+      if:  ${{ matrix.tf_switch == 'prophet_Y' }}
       shell: bash -l {0}
       run: |
         pip install -q tensorflow==2.4.2
