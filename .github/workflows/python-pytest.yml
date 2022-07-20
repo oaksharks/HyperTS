@@ -43,8 +43,8 @@ jobs:
           - os: windows-latest
             python-version: 3.6
 
-          - tf_switch: without_tf
-            prophet_switch: without_prophet
+#          - tf_switch: without_tf
+#            prophet_switch: without_prophet
 
     steps:
     - uses: actions/checkout@v2
